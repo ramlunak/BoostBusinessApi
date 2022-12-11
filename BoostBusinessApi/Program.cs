@@ -1,3 +1,6 @@
+using BoostBusinessApi.Data;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,6 +9,11 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddDbContext<DBContext>(opciones =>
+    opciones.UseSqlite("name=SQliteDbConnection"));
+
+builder.Services.AddAutoMapper(typeof(Program));
 
 var app = builder.Build();
 
