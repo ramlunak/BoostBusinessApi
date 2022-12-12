@@ -7,7 +7,7 @@ namespace BoostBusinessApi.Migrations
     /// <inheritdoc />
     public partial class Initial : Migration
     {
-        /// <inheritdoc />
+        /// <inheritdoc />'12
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(

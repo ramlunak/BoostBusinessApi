@@ -3,6 +3,7 @@ using BoostBusinessApi.Data;
 using BoostBusinessApi.Data.Entity;
 using BoostBusinessApi.Model.User;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace BoostBusinessApi.Controllers
 {
@@ -20,48 +21,52 @@ namespace BoostBusinessApi.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<ActionResult> Get()
         {
-            return new string[] { "value1", "value2" };
+            var users = db.Users.AsNoTracking().ToList();
+            return Ok(users);
         }
 
 
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<ActionResult> Get(int id)
         {
-            return "value";
+            var users = db.Users.Where(x => x.Id == id).AsNoTracking().ToList();
+            return Ok(users);
         }
 
 
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] UserCreateModel userCreate)
         {
-            try
-            {
-                var user = mapper.Map<UserEntity>(userCreate);
-                db.Add(user);
-
-                await db.SaveChangesAsync();
-               
-                return Ok(user);
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
+            var user = mapper.Map<UserEntity>(userCreate);
+            db.Add(user);
+            await db.SaveChangesAsync();
+            return Ok(user);
 
         }
 
 
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task<ActionResult> Put(int id, [FromBody] UserCreateModel userCreate)
         {
+            var user = mapper.Map<UserEntity>(userCreate);
+            user.Id = id;
+            db.Update(user);
+            await db.SaveChangesAsync();
+            return Ok();
         }
 
 
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
+            var result = await db.Users.Where(x => x.Id == id).ExecuteDeleteAsync();
+            if (result > 0)
+                return Ok();
+            else return NotFound();
+
         }
+
     }
 }
