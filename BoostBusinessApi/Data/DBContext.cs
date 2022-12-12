@@ -1,19 +1,22 @@
 ﻿using BoostBusinessApi.Data.Entity;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 namespace BoostBusinessApi.Data
 {
     public class DBContext : DbContext
     {
-        protected readonly IConfiguration Configuration;
-        public DBContext(IConfiguration configuration)
+        public DBContext(DbContextOptions options) : base(options)
         {
-            Configuration = configuration;
+        }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
         }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder options)
+        protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
         {
-            options.UseSqlite(Configuration.GetConnectionString("SQliteDbConnection"));
+
         }
 
         public DbSet<UserEntity> Users => Set<UserEntity>();
