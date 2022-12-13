@@ -2,8 +2,10 @@
 using BoostBusinessApi.Data;
 using BoostBusinessApi.Data.Entity;
 using BoostBusinessApi.Model.User;
+using BoostBusinessApi.Repository.Interface;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Net.Http.Headers;
 
 namespace BoostBusinessApi.Controllers
 {
@@ -11,19 +13,23 @@ namespace BoostBusinessApi.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly DBContext db;
-        private readonly IMapper mapper;
+        private readonly IUserRepository _userRepository;
+        private readonly IDBTransaction _dbTransaction;
+        private readonly IMapper _mapper;
 
-        public UserController(DBContext dataContext, IMapper mapper)
+        public UserController(IUserRepository userRepository,
+                              IDBTransaction dbTransaction,
+                              IMapper mapper)
         {
-            this.db = dataContext;
-            this.mapper = mapper;
+            this._userRepository = userRepository;
+            this._dbTransaction = dbTransaction;
+            this._mapper = mapper;
         }
 
         [HttpGet]
         public async Task<ActionResult> Get()
         {
-            var users = db.Users.AsNoTracking().ToList();
+            var users = await _userRepository.GetAll();
             return Ok(users);
         }
 
@@ -31,7 +37,7 @@ namespace BoostBusinessApi.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult> Get(int id)
         {
-            var users = db.Users.Where(x => x.Id == id).AsNoTracking().ToList();
+            var users = await _userRepository.Find(x => x.Id == id);
             return Ok(users);
         }
 
@@ -39,9 +45,9 @@ namespace BoostBusinessApi.Controllers
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] UserCreateModel userCreate)
         {
-            var user = mapper.Map<UserEntity>(userCreate);
-            db.Add(user);
-            await db.SaveChangesAsync();
+            var user = _mapper.Map<UserEntity>(userCreate);
+            _userRepository.Add(user);
+            await _dbTransaction.Commit();
             return Ok(user);
 
         }
@@ -50,10 +56,10 @@ namespace BoostBusinessApi.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult> Put(int id, [FromBody] UserCreateModel userCreate)
         {
-            var user = mapper.Map<UserEntity>(userCreate);
+            var user = _mapper.Map<UserEntity>(userCreate);
             user.Id = id;
-            db.Update(user);
-            await db.SaveChangesAsync();
+            _userRepository.Update(user);
+            await _dbTransaction.Commit();
             return Ok();
         }
 
@@ -61,10 +67,16 @@ namespace BoostBusinessApi.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
         {
-            var result = await db.Users.Where(x => x.Id == id).ExecuteDeleteAsync();
-            if (result > 0)
+            try
+            {
+                _userRepository.Delete(id);
+                await _dbTransaction.Commit();
                 return Ok();
-            else return NotFound();
+            }
+            catch (Exception ex)
+            {
+                return NotFound();
+            }
 
         }
 
