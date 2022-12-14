@@ -1,5 +1,7 @@
 using AutoMapper;
 using BoostBusinessApi.Controllers;
+using BoostBusinessApi.Data.Entity;
+using BoostBusinessApi.Model.User;
 using BoostBusinessApi.Repository.Interface;
 using Moq;
 
@@ -22,15 +24,48 @@ namespace BoostBusinessApiTest.UserTests
         }
 
         [TestMethod]
-        public void GetTest()
+        public async void GetTest()
         {
 
             var _userController = new UserController(_userRepository.Object, _dbTransaction.Object, _mapper.Object);
 
-            var user = _userController.Get();
+            var user = await _userController.Get();
 
             Assert.IsNotNull(user);
 
         }
+
+        [TestMethod]
+        public async void PostTest()
+        {
+
+            var _userController = new UserController(_userRepository.Object, _dbTransaction.Object, _mapper.Object);
+            var user = new UserCreateModel();
+            user.Name = "Royber";
+            var result = await Assert.ThrowsExceptionAsync<Exception>(async () =>  await _userController.Post(user));
+
+            Assert.IsNotNull(user);
+
+        }
+
+
+        public class AutoMapperProfiles : Profile
+    {
+        public AutoMapperProfiles()
+        {
+            CreateMap<UserCreateModel, UserEntity>();
+         
+            //CreateMap<ActorCreacionDTO, Actor>();
+            //CreateMap<Actor, ActorDTO>();
+            //CreateMap<ComentarioCreacionDTO, Comentario>();
+
+            //CreateMap<PeliculaCreacionDTO, Pelicula>()
+            //    .ForMember(ent => ent.Generos, dto =>
+            //    dto.MapFrom(campo => campo.Generos.Select(id => new Genero { Id = id })));
+
+            //CreateMap<PeliculaActorCreacionDTO, PeliculaActor>();
+        }
+    }
+
     }
 }
