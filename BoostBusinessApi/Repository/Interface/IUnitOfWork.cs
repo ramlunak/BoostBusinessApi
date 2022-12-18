@@ -1,7 +1,9 @@
 ﻿namespace BoostBusinessApi.Repository.Interface
 {
-    public interface IDBTransaction : IDisposable
+    public interface IUnitOfWork : IDisposable
     {
+        IUserRepository UserRepository { get; }
+
         Task Commit();
         void Rollback();
     }

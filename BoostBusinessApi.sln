@@ -5,7 +5,7 @@ VisualStudioVersion = 17.4.33122.133
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BoostBusinessApi", "BoostBusinessApi\BoostBusinessApi.csproj", "{EF7BDEB5-5990-4DE4-812C-80E01FC8A6AF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BoostBusinessApiTest", "BoostBusinessApiTest\BoostBusinessApiTest.csproj", "{6907A6B1-606C-4F3D-B79D-37597EBAA4F5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BoostBusinessApiTest", "BoostBusinessApiTest\BoostBusinessApiTest.csproj", "{F2DAFA4F-098C-42A1-AB30-953EA089DD93}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{EF7BDEB5-5990-4DE4-812C-80E01FC8A6AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EF7BDEB5-5990-4DE4-812C-80E01FC8A6AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EF7BDEB5-5990-4DE4-812C-80E01FC8A6AF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6907A6B1-606C-4F3D-B79D-37597EBAA4F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6907A6B1-606C-4F3D-B79D-37597EBAA4F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6907A6B1-606C-4F3D-B79D-37597EBAA4F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6907A6B1-606C-4F3D-B79D-37597EBAA4F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F2DAFA4F-098C-42A1-AB30-953EA089DD93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F2DAFA4F-098C-42A1-AB30-953EA089DD93}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F2DAFA4F-098C-42A1-AB30-953EA089DD93}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F2DAFA4F-098C-42A1-AB30-953EA089DD93}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

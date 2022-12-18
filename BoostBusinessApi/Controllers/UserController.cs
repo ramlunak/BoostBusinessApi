@@ -1,11 +1,8 @@
 ﻿using AutoMapper;
-using BoostBusinessApi.Data;
 using BoostBusinessApi.Data.Entity;
 using BoostBusinessApi.Model.User;
 using BoostBusinessApi.Repository.Interface;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Net.Http.Headers;
 
 namespace BoostBusinessApi.Controllers
 {
@@ -13,64 +10,57 @@ namespace BoostBusinessApi.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly IUserRepository _userRepository;
-        private readonly IDBTransaction _dbTransaction;
+        private readonly IUnitOfWork _uow;
         private readonly IMapper _mapper;
 
-        public UserController(IUserRepository userRepository,
-                              IDBTransaction dbTransaction,
+        public UserController(IUnitOfWork unitOfWork,
                               IMapper mapper)
         {
-            this._userRepository = userRepository;
-            this._dbTransaction = dbTransaction;
+            this._uow = unitOfWork;
             this._mapper = mapper;
         }
 
         [HttpGet]
         public async Task<ActionResult> Get()
         {
-            var users = await _userRepository.GetAll();
+            var users = await _uow.UserRepository.GetAll();
             return Ok(users);
         }
-
 
         [HttpGet("{id}")]
         public async Task<ActionResult> Get(int id)
         {
-            var users = await _userRepository.Find(x => x.Id == id);
+            var users = await _uow.UserRepository.Find(x => x.Id == id);
             return Ok(users);
         }
-
 
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] UserCreateModel userCreate)
         {
             var user = _mapper.Map<UserEntity>(userCreate);
-            _userRepository.Add(user);
-            await _dbTransaction.Commit();
+            _uow.UserRepository.Add(user);
+            await _uow.Commit();
             return Ok(user);
 
         }
-
 
         [HttpPut("{id}")]
         public async Task<ActionResult> Put(int id, [FromBody] UserCreateModel userCreate)
         {
             var user = _mapper.Map<UserEntity>(userCreate);
             user.Id = id;
-            _userRepository.Update(user);
-            await _dbTransaction.Commit();
+            _uow.UserRepository.Update(user);
+            await _uow.Commit();
             return Ok();
         }
-
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
         {
             try
             {
-                _userRepository.Delete(id);
-                await _dbTransaction.Commit();
+                _uow.UserRepository.Delete(id);
+                await _uow.Commit();
                 return Ok();
             }
             catch (Exception ex)

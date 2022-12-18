@@ -3,14 +3,33 @@ using BoostBusinessApi.Repository.Interface;
 
 namespace BoostBusinessApi.Repository
 {
-    public class DBTransaction : IDBTransaction
+    public class UnitOfWork : IUnitOfWork
     {
 
         private readonly DBContext _context;
-        public DBTransaction(DBContext context)
+        public UnitOfWork(DBContext context)
         {
             this._context = context;
         }
+
+        #region Repository
+
+        private IUserRepository _userRepository;
+        public IUserRepository UserRepository
+        {
+            get
+            {
+
+                if (this._userRepository == null)
+                {
+                    this._userRepository = new UserRepository(_context);
+                }
+                return _userRepository;
+            }
+        }
+
+        #endregion
+
 
         public async Task Commit()
         {
