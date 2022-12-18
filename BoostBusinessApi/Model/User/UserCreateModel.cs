@@ -10,5 +10,10 @@ namespace BoostBusinessApi.Model.User
         [EmailAddress(ErrorMessage = ErrorCode.email_invalid)]
         [Required]
         public string Email { get; set; }
+        public UserCreateModel(string name, string email)
+        {
+            Name = name;
+            Email = email;
+        }
     }
 }
