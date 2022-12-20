@@ -26,7 +26,7 @@ static void ConfigureServicies(WebApplicationBuilder builder)
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
 
-    builder.Services.AddDbContext<DBContext>(opciones => opciones.UseSqlite("name=SQliteDbConnection"));
+    builder.Services.AddDbContext<DBContext>(opciones => opciones.UseSqlServer("name=DefaultConnection"));
 
     builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 
