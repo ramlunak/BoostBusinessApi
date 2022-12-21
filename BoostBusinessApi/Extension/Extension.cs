@@ -24,9 +24,9 @@ namespace BoostBusinessApi.Extension
 
         public static SystemErrorEntity AsSystemError(this Exception ex)
         {
-
             SystemErrorEntity response = new SystemErrorEntity();
-            response.Message = ex.ToString();
+            response.Exception = ex.ToString();
+            response.Message = ex.Message.ToString();
             return response;
         }
     }

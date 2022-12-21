@@ -1,4 +1,6 @@
 using BoostBusinessApi.Data;
+using BoostBusinessApi.Data.Entity;
+using BoostBusinessApi.Extension;
 using BoostBusinessApi.Repository;
 using BoostBusinessApi.Repository.Interface;
 using MediatR;
@@ -11,7 +13,19 @@ ConfigureServicies(builder);
 
 var app = builder.Build();
 
-ConfigureSwagger(app);
+//app.Use((context, next) =>
+//{
+//    context.Request.EnableBuffering();
+//    return next();
+//});
+
+app.UseMiddleware<ErrorReporterMiddleware>();
+//app.UseErrorHandler();
+
+
+app.UseSwagger();
+app.UseSwaggerUI();
+
 
 app.UseHttpsRedirection();
 
@@ -33,17 +47,11 @@ static void ConfigureServicies(WebApplicationBuilder builder)
     builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
 
     builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
+    builder.Services.AddTransient<ISystemErroRepository, SystemErroRepository>();
 
     builder.Services.AddAutoMapper(typeof(Program));
+
+    builder.Services.AddTransient<ErrorReporterMiddleware>();
 }
 
-static void ConfigureSwagger(WebApplication app)
-{
-    // Configure the HTTP request pipeline.
-    //if (app.Environment.IsDevelopment())
-    //{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-    //}
-}
 

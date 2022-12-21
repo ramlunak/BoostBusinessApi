@@ -33,8 +33,17 @@ namespace BoostBusinessApi.Migrations
                     b.Property<DateTime>("ErrorDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Message")
+                    b.Property<string>("Exception")
                         .HasColumnType("varchar(MAX)");
+
+                    b.Property<string>("Message")
+                        .HasColumnType("varchar(1000)");
+
+                    b.Property<string>("Method")
+                        .HasColumnType("varchar(20)");
+
+                    b.Property<string>("Path")
+                        .HasColumnType("varchar(1000)");
 
                     b.Property<string>("Payload")
                         .HasColumnType("varchar(2000)");

@@ -2,7 +2,9 @@
 
 namespace BoostBusinessApi.Repository.Interface
 {
-    public interface ISystemErroRepository : IBaseRepository<SystemErrorEntity>
+    public interface ISystemErroRepository
     {
+        void Add(SystemErrorEntity entity);
+        Task SaveChangesAsync();
     }
 }

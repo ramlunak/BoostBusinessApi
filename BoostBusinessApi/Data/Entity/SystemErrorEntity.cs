@@ -9,14 +9,26 @@ namespace BoostBusinessApi.Data.Entity
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        [Column(TypeName = "varchar(MAX)")]
+        public DateTime ErrorDate { get; set; } = DateTime.Now;
+
+        [Column(TypeName = "varchar(20)")]
+        public string? Method { get; internal set; }
+
+
+        [Column(TypeName = "varchar(1000)")]
+        public string? Path { get; internal set; }
+
+
+        [Column(TypeName = "varchar(1000)")]
         public string? Message { get; set; }
+
+
+        [Column(TypeName = "varchar(MAX)")]
+        public string? Exception { get; set; }
+
 
         [Column(TypeName = "varchar(2000)")]
         public string? Payload { get; set; }
-
-        public DateTime ErrorDate { get; set; } = DateTime.Now;
-
 
     }
 }

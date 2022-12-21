@@ -4,10 +4,24 @@ using BoostBusinessApi.Repository.Interface;
 
 namespace BoostBusinessApi.Repository
 {
-    public class SystemErroRepository : BaseRepository<SystemErrorEntity>, ISystemErroRepository
+    public class SystemErroRepository : ISystemErroRepository
     {
-        public SystemErroRepository(DBContext context) : base(context)
+        private readonly DBContext _context;
+
+        public SystemErroRepository(DBContext context)
         {
+            this._context = context;
         }
+
+        public void Add(SystemErrorEntity entity)
+        {
+            _context.Add(entity);
+        }
+
+        public async Task SaveChangesAsync()
+        {
+            await _context.SaveChangesAsync();
+        }
+
     }
 }

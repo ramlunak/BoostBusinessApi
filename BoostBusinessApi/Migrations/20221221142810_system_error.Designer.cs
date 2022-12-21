@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BoostBusinessApi.Migrations
 {
     [DbContext(typeof(DBContext))]
-    [Migration("20221221004718_system_erro_entity")]
-    partial class systemerroentity
+    [Migration("20221221142810_system_error")]
+    partial class systemerror
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -36,8 +36,17 @@ namespace BoostBusinessApi.Migrations
                     b.Property<DateTime>("ErrorDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Message")
+                    b.Property<string>("Exception")
                         .HasColumnType("varchar(MAX)");
+
+                    b.Property<string>("Message")
+                        .HasColumnType("varchar(1000)");
+
+                    b.Property<string>("Method")
+                        .HasColumnType("varchar(20)");
+
+                    b.Property<string>("Path")
+                        .HasColumnType("varchar(1000)");
 
                     b.Property<string>("Payload")
                         .HasColumnType("varchar(2000)");
