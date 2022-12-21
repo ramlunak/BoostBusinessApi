@@ -50,11 +50,11 @@ namespace BoostBusinessApi.Aplication.Handlers
             }
             catch (Exception ex)
             {
-                _uow.Dispose();
-
                 var error = ex.AsSystemError();
+                error.Payload = request.AsJson();
                 _uow.SystemErroRepository.Add(error);
-                _uow.Commit();
+
+                await _uow.Commit();
 
                 throw new Exception(ex.Message);
             }
