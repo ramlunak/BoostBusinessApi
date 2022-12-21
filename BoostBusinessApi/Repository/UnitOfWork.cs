@@ -28,6 +28,20 @@ namespace BoostBusinessApi.Repository
             }
         }
 
+        private ISystemErroRepository _systemErroRepository;
+        public ISystemErroRepository SystemErroRepository
+        {
+            get
+            {
+
+                if (this._systemErroRepository == null)
+                {
+                    this._systemErroRepository = new SystemErroRepository(_context);
+                }
+                return _systemErroRepository;
+            }
+        }
+
         #endregion
 
 

@@ -5,7 +5,7 @@ VisualStudioVersion = 17.4.33122.133
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BoostBusinessApi", "BoostBusinessApi\BoostBusinessApi.csproj", "{EF7BDEB5-5990-4DE4-812C-80E01FC8A6AF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BoostBusinessApiTest", "BoostBusinessApiTest\BoostBusinessApiTest.csproj", "{F2DAFA4F-098C-42A1-AB30-953EA089DD93}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BoostBusinessApiTest", "BoostBusinessApiTest\BoostBusinessApiTest.csproj", "{F2DAFA4F-098C-42A1-AB30-953EA089DD93}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

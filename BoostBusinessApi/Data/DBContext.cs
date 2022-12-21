@@ -5,7 +5,7 @@ using System.Reflection;
 namespace BoostBusinessApi.Data
 {
     public class DBContext : DbContext
-    {       
+    {
         public DBContext(DbContextOptions options) : base(options)
         {
         }
@@ -22,5 +22,6 @@ namespace BoostBusinessApi.Data
         }
 
         public DbSet<UserEntity> Users => Set<UserEntity>();
+        public DbSet<SystemErrorEntity> SystemErrors => Set<SystemErrorEntity>();
     }
 }

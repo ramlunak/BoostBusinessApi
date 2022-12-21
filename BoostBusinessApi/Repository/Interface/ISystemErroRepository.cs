@@ -2,8 +2,7 @@
 
 namespace BoostBusinessApi.Repository.Interface
 {
-    public interface IUserRepository : IBaseRepository<UserEntity>
+    public interface ISystemErroRepository : IBaseRepository<SystemErrorEntity>
     {
-
     }
 }

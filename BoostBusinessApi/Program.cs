@@ -1,7 +1,9 @@
 using BoostBusinessApi.Data;
 using BoostBusinessApi.Repository;
 using BoostBusinessApi.Repository.Interface;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,6 +29,8 @@ static void ConfigureServicies(WebApplicationBuilder builder)
     builder.Services.AddSwaggerGen();
 
     builder.Services.AddDbContext<DBContext>(opciones => opciones.UseSqlServer("name=DefaultConnection"));
+
+    builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
 
     builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 

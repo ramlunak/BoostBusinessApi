@@ -1,7 +1,5 @@
-﻿using AutoMapper;
-using BoostBusinessApi.Data.Entity;
-using BoostBusinessApi.Model.User;
-using BoostBusinessApi.Repository.Interface;
+﻿using BoostBusinessApi.Aplication.Commands;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BoostBusinessApi.Controllers
@@ -10,65 +8,57 @@ namespace BoostBusinessApi.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly IUnitOfWork _uow;
-        private readonly IMapper _mapper;
+        private readonly IMediator _mediator;
 
-        public UserController(IUnitOfWork unitOfWork,
-                              IMapper mapper)
+        public UserController(IMediator mediator)
         {
-            this._uow = unitOfWork;
-            this._mapper = mapper;
+            this._mediator = mediator;
         }
 
-        [HttpGet]
-        public async Task<ActionResult> Get()
-        {
-            var users = await _uow.UserRepository.GetAll();
-            return Ok(users);
-        }
+        //[HttpGet]
+        //public async Task<ActionResult> Get()
+        //{
+        //    var users = await _uow.UserRepository.GetAll();
+        //    return Ok(users);
+        //}
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult> Get(int id)
-        {
-            var users = await _uow.UserRepository.Find(x => x.Id == id);
-            return Ok(users);
-        }
+        //[HttpGet("{id}")]
+        //public async Task<ActionResult> Get(int id)
+        //{
+        //    var users = await _uow.UserRepository.Find(x => x.Id == id);
+        //    return Ok(users);
+        //}
 
         [HttpPost]
-        public async Task<ActionResult> Post([FromBody] UserCreateModel userCreate)
+        public async Task<ActionResult> Post([FromBody] UserCreateRequest userCreateRequest)
         {
-            var user = _mapper.Map<UserEntity>(userCreate);
-            _uow.UserRepository.Add(user);
-            await _uow.Commit();
-            return Ok(user);
-
+            var result = await _mediator.Send(userCreateRequest);
+            return Ok(result);
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> Put(int id, [FromBody] UserCreateModel userCreate)
+        public async Task<ActionResult> Put(int id, [FromBody] UserUpdateRequest userUpdateRequest)
         {
-            var user = _mapper.Map<UserEntity>(userCreate);
-            user.Id = id;
-            _uow.UserRepository.Update(user);
-            await _uow.Commit();
-            return Ok();
+            userUpdateRequest.Id = id;
+            var result = await _mediator.Send(userUpdateRequest);
+            return Ok(result);
         }
 
-        [HttpDelete("{id}")]
-        public async Task<ActionResult> Delete(int id)
-        {
-            try
-            {
-                _uow.UserRepository.Delete(id);
-                await _uow.Commit();
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                return NotFound();
-            }
+        //[HttpDelete("{id}")]
+        //public async Task<ActionResult> Delete(int id)
+        //{
+        //    try
+        //    {
+        //        _uow.UserRepository.Delete(id);
+        //        await _uow.Commit();
+        //        return Ok();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return NotFound();
+        //    }
 
-        }
+        //}
 
     }
 }

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
+using BoostBusinessApi.Aplication.Commands;
 using BoostBusinessApi.Data.Entity;
-using BoostBusinessApi.Model.User;
 
 namespace BoostBusinessApi.Util
 {
@@ -8,8 +8,8 @@ namespace BoostBusinessApi.Util
     {
         public AutoMapperProfiles()
         {
-            CreateMap<UserCreateModel, UserEntity>();
-         
+            CreateMap<UserCreateRequest, UserEntity>();
+
             //CreateMap<ActorCreacionDTO, Actor>();
             //CreateMap<Actor, ActorDTO>();
             //CreateMap<ComentarioCreacionDTO, Comentario>();
