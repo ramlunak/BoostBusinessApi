@@ -1,4 +1,5 @@
 ﻿using BoostBusinessApi.Data;
+using BoostBusinessApi.Data.Entity;
 using BoostBusinessApi.Repository.Interface;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -48,13 +49,13 @@ namespace BoostBusinessApi.Repository
         #endregion
 
         public async Task Commit()
-        {
+        {            
             await _context.SaveChangesAsync();
         }
 
         public void Rollback()
         {
-            this._context.ChangeTracker.Clear();            
+            this._context.ChangeTracker.Clear();
         }
 
         private bool disposed = false;

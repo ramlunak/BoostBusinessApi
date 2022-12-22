@@ -1,4 +1,5 @@
 ﻿using BoostBusinessApi.Data;
+using BoostBusinessApi.Data.Entity;
 using BoostBusinessApi.Repository.Interface;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
@@ -52,6 +53,7 @@ namespace BoostBusinessApi.Repository
 
         public void Update(T entity)
         {
+            _context.Entry(entity).State = EntityState.Modified;
             _context.Set<T>().Update(entity);
         }
 

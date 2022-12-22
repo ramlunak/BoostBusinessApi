@@ -6,6 +6,8 @@ namespace BoostBusinessApi.Aplication.Commands
 {
     public class UserUpdateRequest : IRequest<ApiModelResponse>
     {
+
+        [Required]
         public int Id { get; set; }
 
 

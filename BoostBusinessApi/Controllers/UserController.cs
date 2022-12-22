@@ -36,10 +36,9 @@ namespace BoostBusinessApi.Controllers
             return Ok(result);
         }
 
-        [HttpPut("{id}")]
-        public async Task<ActionResult> Put(int id, [FromBody] UserUpdateRequest userUpdateRequest)
+        [HttpPut]
+        public async Task<ActionResult> Put([FromBody] UserUpdateRequest userUpdateRequest)
         {
-            userUpdateRequest.Id = id;
             var result = await _mediator.Send(userUpdateRequest);
             return Ok(result);
         }

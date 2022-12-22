@@ -8,7 +8,7 @@ using BoostBusinessApi.Extension;
 
 namespace BoostBusinessApi.Aplication.Handlers
 {
-    public class UserHandlers :
+    public class UserCommandHandlers :
         IRequestHandler<UserCreateRequest, ApiModelResponse>,
         IRequestHandler<UserUpdateRequest, ApiModelResponse>
     {
@@ -16,7 +16,7 @@ namespace BoostBusinessApi.Aplication.Handlers
         private readonly IUnitOfWork _uow;
         private readonly IMapper _mapper;
 
-        public UserHandlers(IUnitOfWork unitOfWork,
+        public UserCommandHandlers(IUnitOfWork unitOfWork,
                               IMapper mapper)
         {
             _uow = unitOfWork;
@@ -35,6 +35,7 @@ namespace BoostBusinessApi.Aplication.Handlers
         {
 
             var entity = _mapper.Map<UserEntity>(request);
+            //_uow.UserRepository(entity).State = EntityState.Modified;
             _uow.UserRepository.Update(entity);
             await _uow.Commit();
             return entity.AsApiModelResponse();
