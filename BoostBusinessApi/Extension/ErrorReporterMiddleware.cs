@@ -1,22 +1,16 @@
-﻿using Azure.Core;
-using BoostBusinessApi.Repository.Interface;
-using Microsoft.AspNetCore.Diagnostics;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using BoostBusinessApi.Repository.Interface;
 using System.Net;
-using System.Text;
-using System.Text.Json;
 
 namespace BoostBusinessApi.Extension
 {
     public class ErrorReporterMiddleware : IMiddleware
     {
         private readonly ILogger<ErrorReporterMiddleware> _logger;
-        private readonly ISystemErroRepository _erroRepository;
-        public ErrorReporterMiddleware(ILogger<ErrorReporterMiddleware> logger, ISystemErroRepository erroRepository)
+        private readonly IUnitOfWork _unitOfWork;
+        public ErrorReporterMiddleware(ILogger<ErrorReporterMiddleware> logger, IUnitOfWork unitOfWork)
         {
             _logger = logger;
-            _erroRepository = erroRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task InvokeAsync(HttpContext context, RequestDelegate next)
@@ -38,8 +32,9 @@ namespace BoostBusinessApi.Extension
                 using var reader = new StreamReader(context.Request.Body);
                 var body = await reader.ReadToEndAsync();
 
-                _erroRepository.Add(systemError);
-                await _erroRepository.SaveChangesAsync();
+                _unitOfWork.Rollback();
+                _unitOfWork.SystemErroRepository.Add(systemError);
+                await _unitOfWork.Commit();
 
                 var problem = new
                 {

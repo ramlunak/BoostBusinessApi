@@ -1,5 +1,7 @@
 ﻿using BoostBusinessApi.Data;
 using BoostBusinessApi.Repository.Interface;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace BoostBusinessApi.Repository
 {
@@ -28,8 +30,22 @@ namespace BoostBusinessApi.Repository
             }
         }
 
-        #endregion
 
+        private ISystemErroRepository _systemErroRepository;
+        public ISystemErroRepository SystemErroRepository
+        {
+            get
+            {
+
+                if (this._systemErroRepository == null)
+                {
+                    this._systemErroRepository = new SystemErroRepository(_context);
+                }
+                return _systemErroRepository;
+            }
+        }
+
+        #endregion
 
         public async Task Commit()
         {
@@ -38,7 +54,7 @@ namespace BoostBusinessApi.Repository
 
         public void Rollback()
         {
-            Dispose();
+            this._context.ChangeTracker.Clear();            
         }
 
         private bool disposed = false;

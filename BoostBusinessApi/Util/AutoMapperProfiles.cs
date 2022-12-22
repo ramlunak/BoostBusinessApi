@@ -8,11 +8,8 @@ namespace BoostBusinessApi.Util
     {
         public AutoMapperProfiles()
         {
-            //CreateMap<UserCreateRequest, UserEntity>();
-
-            //CreateMap<ActorCreacionDTO, Actor>();
-            //CreateMap<Actor, ActorDTO>();
-            //CreateMap<ComentarioCreacionDTO, Comentario>();
+            CreateMap<UserCreateRequest, UserEntity>();
+            CreateMap<UserUpdateRequest, UserEntity>();
 
             //CreateMap<PeliculaCreacionDTO, Pelicula>()
             //    .ForMember(ent => ent.Generos, dto =>
