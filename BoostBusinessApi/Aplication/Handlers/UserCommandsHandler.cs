@@ -8,7 +8,7 @@ using BoostBusinessApi.Extension;
 
 namespace BoostBusinessApi.Aplication.Handlers
 {
-    public class UserCommandHandlers :
+    public class UserCommandsHandler :
         IRequestHandler<UserCreateRequest, ApiModelResponse>,
         IRequestHandler<UserUpdateRequest, ApiModelResponse>
     {
@@ -16,7 +16,7 @@ namespace BoostBusinessApi.Aplication.Handlers
         private readonly IUnitOfWork _uow;
         private readonly IMapper _mapper;
 
-        public UserCommandHandlers(IUnitOfWork unitOfWork,
+        public UserCommandsHandler(IUnitOfWork unitOfWork,
                               IMapper mapper)
         {
             _uow = unitOfWork;
