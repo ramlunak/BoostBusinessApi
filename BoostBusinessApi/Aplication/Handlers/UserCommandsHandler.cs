@@ -33,9 +33,7 @@ namespace BoostBusinessApi.Aplication.Handlers
 
         public async Task<ApiModelResponse> Handle(UserUpdateRequest request, CancellationToken cancellationToken)
         {
-
-            var entity = _mapper.Map<UserEntity>(request);
-            //_uow.UserRepository(entity).State = EntityState.Modified;
+            var entity = _mapper.Map<UserEntity>(request);            
             _uow.UserRepository.Update(entity);
             await _uow.Commit();
             return entity.AsApiModelResponse();
